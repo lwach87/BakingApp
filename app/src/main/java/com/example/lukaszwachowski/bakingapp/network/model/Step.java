@@ -2,8 +2,12 @@ package com.example.lukaszwachowski.bakingapp.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
+//@Entity(tableName = "steps")
 public class Step {
 
+    public int recipeId;
+
+    //    @PrimaryKey
     @SerializedName("id")
     public int id;
 
@@ -18,6 +22,15 @@ public class Step {
 
     @SerializedName("thumbnailURL")
     public String thumbnailURL;
+
+//    public Step(int recipeId, int id, String shortDescription, String description, String videoURL, String thumbnailURL) {
+//        this.recipeId = recipeId;
+//        this.id = id;
+//        this.shortDescription = shortDescription;
+//        this.description = description;
+//        this.videoURL = videoURL;
+//        this.thumbnailURL = thumbnailURL;
+//    }
 
     public int getId() {
         return id;
