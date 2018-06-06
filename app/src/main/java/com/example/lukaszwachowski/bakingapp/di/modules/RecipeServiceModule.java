@@ -1,7 +1,7 @@
 package com.example.lukaszwachowski.bakingapp.di.modules;
 
-import com.example.lukaszwachowski.bakingapp.data.network.MainActivityMVP;
-import com.example.lukaszwachowski.bakingapp.data.network.RecipeResponse;
+import com.example.lukaszwachowski.bakingapp.ui.MainActivityMVP;
+import com.example.lukaszwachowski.bakingapp.ui.MainActivityPresenter;
 import com.example.lukaszwachowski.bakingapp.di.MainActivityScope;
 import com.example.lukaszwachowski.bakingapp.network.RecipeService;
 
@@ -33,6 +33,6 @@ public class RecipeServiceModule {
     @Provides
     @MainActivityScope
     public MainActivityMVP.Presenter providePresenter(RecipeService service) {
-        return new RecipeResponse(service);
+        return new MainActivityPresenter(service);
     }
 }

@@ -7,7 +7,6 @@ import com.example.lukaszwachowski.bakingapp.data.database.RecipeDao;
 import com.example.lukaszwachowski.bakingapp.data.database.RecipeDatabase;
 import com.example.lukaszwachowski.bakingapp.data.database.Repository;
 import com.example.lukaszwachowski.bakingapp.di.ApplicationScope;
-import com.example.lukaszwachowski.bakingapp.network.RecipeService;
 
 import dagger.Module;
 import dagger.Provides;
