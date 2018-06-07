@@ -1,4 +1,4 @@
-package com.example.lukaszwachowski.bakingapp.ui;
+package com.example.lukaszwachowski.bakingapp.ui.main;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.lukaszwachowski.bakingapp.R;
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +17,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DataViewHolder> {
+public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.DataViewHolder> {
 
-    private Context context;
-    private Picasso picasso;
     private List<Recipe> recipes = new ArrayList<>();
     private OnItemClickListener listener;
+    private Context context;
 
-    public ListAdapter(Context context, Picasso picasso) {
+    public RecipeAdapter(Context context) {
         this.context = context;
-        this.picasso = picasso;
     }
 
     public void setListener(OnItemClickListener listener) {
@@ -40,7 +37,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DataViewHolder
 
     @NonNull
     @Override
-    public ListAdapter.DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecipeAdapter.DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.single_item, parent, false);
         return new DataViewHolder(view);
@@ -49,6 +46,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DataViewHolder
     @Override
     public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
         holder.name.setText(recipes.get(position).name);
+        holder.servings.setText(String.valueOf(recipes.get(position).servings));
+        holder.ingredients.setText(String.valueOf(recipes.get(position).ingredients.size()));
+        holder.steps.setText(String.valueOf(recipes.get(position).steps.size()));
     }
 
     @Override
@@ -60,6 +60,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DataViewHolder
 
         @BindView(R.id.name)
         TextView name;
+
+        @BindView(R.id.servings)
+        TextView servings;
+
+        @BindView(R.id.ingredients)
+        TextView ingredients;
+
+        @BindView(R.id.steps)
+        TextView steps;
 
         public DataViewHolder(View view) {
             super(view);

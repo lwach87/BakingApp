@@ -1,10 +1,11 @@
-package com.example.lukaszwachowski.bakingapp.ui;
+package com.example.lukaszwachowski.bakingapp.ui.main;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 
 import com.example.lukaszwachowski.bakingapp.BakingApp;
@@ -24,12 +25,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
     MainActivityMVP.Presenter presenter;
 
     @Inject
-    ListAdapter listAdapter;
+    RecipeAdapter recipeAdapter;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    @BindView(R.id.main_layout)
+    @BindView(R.id.main_activity)
     ViewGroup layout;
 
     @Override
@@ -46,13 +47,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
         presenter.attachView(this);
         presenter.loadData();
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(listAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns()));
+        recyclerView.setAdapter(recipeAdapter);
+    }
+
+    private int numberOfColumns() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int widthDivider = 650;
+        int width = displayMetrics.widthPixels;
+        int nColumns = width / widthDivider;
+        if (nColumns < 1) return 1;
+        return nColumns;
     }
 
     @Override
     public void updateData(Recipe recipe) {
-        listAdapter.swapData(recipe);
+        recipeAdapter.swapData(recipe);
     }
 
     @Override

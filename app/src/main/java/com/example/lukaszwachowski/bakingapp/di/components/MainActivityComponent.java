@@ -3,7 +3,7 @@ package com.example.lukaszwachowski.bakingapp.di.components;
 import com.example.lukaszwachowski.bakingapp.di.MainActivityScope;
 import com.example.lukaszwachowski.bakingapp.di.modules.MainActivityModule;
 import com.example.lukaszwachowski.bakingapp.di.modules.RecipeServiceModule;
-import com.example.lukaszwachowski.bakingapp.ui.MainActivity;
+import com.example.lukaszwachowski.bakingapp.ui.main.MainActivity;
 
 import dagger.Component;
 

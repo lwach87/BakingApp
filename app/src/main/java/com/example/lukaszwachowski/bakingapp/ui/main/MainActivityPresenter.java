@@ -1,6 +1,7 @@
-package com.example.lukaszwachowski.bakingapp.ui;
+package com.example.lukaszwachowski.bakingapp.ui.main;
 
 import com.example.lukaszwachowski.bakingapp.network.RecipeService;
+import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityMVP;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

@@ -1,7 +1,7 @@
 package com.example.lukaszwachowski.bakingapp.di.modules;
 
-import com.example.lukaszwachowski.bakingapp.ui.MainActivityMVP;
-import com.example.lukaszwachowski.bakingapp.ui.MainActivityPresenter;
+import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityMVP;
+import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityPresenter;
 import com.example.lukaszwachowski.bakingapp.di.MainActivityScope;
 import com.example.lukaszwachowski.bakingapp.network.RecipeService;
 

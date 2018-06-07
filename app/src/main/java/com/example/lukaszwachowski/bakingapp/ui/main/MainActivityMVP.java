@@ -1,4 +1,4 @@
-package com.example.lukaszwachowski.bakingapp.ui;
+package com.example.lukaszwachowski.bakingapp.ui.main;
 
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
 
