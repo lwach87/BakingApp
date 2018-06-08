@@ -1,5 +1,6 @@
 package com.example.lukaszwachowski.bakingapp.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,13 +14,16 @@ import com.example.lukaszwachowski.bakingapp.R;
 import com.example.lukaszwachowski.bakingapp.di.components.DaggerMainActivityComponent;
 import com.example.lukaszwachowski.bakingapp.di.modules.MainActivityModule;
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
+import com.example.lukaszwachowski.bakingapp.ui.detail.DetailActivity;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MainActivityMVP.View {
+import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.RECIPE_OBJECT;
+
+public class MainActivity extends AppCompatActivity implements MainActivityMVP.View, RecipeAdapter.OnItemClickListener {
 
     @Inject
     MainActivityMVP.Presenter presenter;
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
 
         presenter.attachView(this);
         presenter.loadData();
+        recipeAdapter.setListener(this);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns()));
         recyclerView.setAdapter(recipeAdapter);
@@ -75,5 +80,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
     protected void onDestroy() {
         super.onDestroy();
         presenter.detachView();
+    }
+
+    @Override
+    public void onItemClick(Recipe recipe) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra(RECIPE_OBJECT, recipe);
+        startActivity(intent);
     }
 }

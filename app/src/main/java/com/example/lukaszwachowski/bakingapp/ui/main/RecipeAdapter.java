@@ -39,7 +39,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.DataViewHo
     @Override
     public RecipeAdapter.DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.single_item, parent, false);
+                .inflate(R.layout.recipe_item, parent, false);
         return new DataViewHolder(view);
     }
 

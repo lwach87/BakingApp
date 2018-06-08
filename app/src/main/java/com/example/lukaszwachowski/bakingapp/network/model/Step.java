@@ -1,8 +1,11 @@
 package com.example.lukaszwachowski.bakingapp.network.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+public class Step implements Parcelable {
 
     @SerializedName("id")
     public int id;
@@ -37,5 +40,37 @@ public class Step {
 
     public String getThumbnailURL() {
         return thumbnailURL;
+    }
+
+    protected Step(Parcel in) {
+        id = in.readInt();
+        shortDescription = in.readString();
+        description = in.readString();
+        videoURL = in.readString();
+        thumbnailURL = in.readString();
+    }
+
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
+        @Override
+        public Step createFromParcel(Parcel in) {
+            return new Step(in);
+        }
+
+        @Override
+        public Step[] newArray(int size) {
+            return new Step[size];
+        }
+    };
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeInt(id);
+        out.writeString(shortDescription);
+        out.writeString(description);
+        out.writeString(videoURL);
+        out.writeString(thumbnailURL);
+    }
+
+    public int describeContents() {
+        return 0;
     }
 }

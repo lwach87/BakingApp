@@ -18,7 +18,7 @@ public class MainActivityModule {
 
     @Provides
     @MainActivityScope
-    public RecipeAdapter listAdapter() {
+    public RecipeAdapter recipeAdapter() {
         return new RecipeAdapter(mainActivity);
     }
 }
