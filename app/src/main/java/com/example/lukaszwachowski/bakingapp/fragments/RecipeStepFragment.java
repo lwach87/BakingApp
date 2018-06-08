@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.lukaszwachowski.bakingapp.BakingApp;
 import com.example.lukaszwachowski.bakingapp.R;
@@ -29,18 +30,22 @@ public class RecipeStepFragment extends Fragment {
     @BindView(R.id.ingredients_recycler_view)
     RecyclerView ingredientsRecyclerView;
 
+    @BindView(R.id.steps_recycler_view)
+    RecyclerView stepsRecyclerView;
+
+    @BindView(R.id.ingredients_text)
+    TextView ingredientsText;
+
+    @BindView(R.id.steps_text)
+    TextView stepsText;
+
     @Inject
     IngredientsAdapter ingredientsAdapter;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    @Inject
+    StepsAdapter stepsAdapter;
 
-        DaggerRecipeStepFragmentComponent.builder()
-                .recipeStepFragmentModule(new RecipeStepFragmentModule())
-                .applicationComponent(BakingApp.get(getActivity()).component())
-                .build().inject(this);
-    }
+    private Recipe recipe;
 
     public static RecipeStepFragment newInstance(Recipe recipe) {
         Bundle bundle = new Bundle();
@@ -51,18 +56,39 @@ public class RecipeStepFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        setRetainInstance(true);
+
+        DaggerRecipeStepFragmentComponent.builder()
+                .recipeStepFragmentModule(new RecipeStepFragmentModule())
+                .applicationComponent(BakingApp.get(getActivity()).component())
+                .build().inject(this);
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_step, container, false);
         ButterKnife.bind(this, view);
 
-        Bundle arguments = getArguments();
+        if (savedInstanceState == null) {
 
-        Recipe recipe = arguments.getParcelable(RECIPE_OBJECT);
+            stepsText.setVisibility(View.VISIBLE);
+            ingredientsText.setVisibility(View.VISIBLE);
 
-        ingredientsAdapter.swapData(recipe.ingredients);
-        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+            recipe = getArguments().getParcelable(RECIPE_OBJECT);
+
+            ingredientsAdapter.swapData(recipe.ingredients);
+            ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            ingredientsRecyclerView.setNestedScrollingEnabled(false);
+            ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+
+            stepsAdapter.swapData(recipe.steps);
+            stepsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            stepsRecyclerView.setNestedScrollingEnabled(false);
+            stepsRecyclerView.setAdapter(stepsAdapter);
+        }
 
         return view;
     }
