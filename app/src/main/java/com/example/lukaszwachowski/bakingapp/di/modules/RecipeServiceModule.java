@@ -1,9 +1,10 @@
 package com.example.lukaszwachowski.bakingapp.di.modules;
 
-import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityMVP;
-import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityPresenter;
 import com.example.lukaszwachowski.bakingapp.di.MainActivityScope;
 import com.example.lukaszwachowski.bakingapp.network.RecipeService;
+import com.example.lukaszwachowski.bakingapp.ui.main.MainActivity;
+import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityMVP;
+import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -32,7 +33,7 @@ public class RecipeServiceModule {
 
     @Provides
     @MainActivityScope
-    public MainActivityMVP.Presenter providePresenter(RecipeService service) {
-        return new MainActivityPresenter(service);
+    public MainActivityMVP.Presenter providePresenter(RecipeService service, MainActivity mainActivity) {
+        return new MainActivityPresenter(service, mainActivity);
     }
 }

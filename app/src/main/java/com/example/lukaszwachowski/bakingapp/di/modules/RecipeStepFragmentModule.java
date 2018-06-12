@@ -1,14 +1,27 @@
 package com.example.lukaszwachowski.bakingapp.di.modules;
 
 import com.example.lukaszwachowski.bakingapp.di.RecipeStepFragmentScope;
-import com.example.lukaszwachowski.bakingapp.fragments.IngredientsAdapter;
-import com.example.lukaszwachowski.bakingapp.fragments.StepsAdapter;
+import com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment.IngredientsAdapter;
+import com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment.StepsAdapter;
+import com.example.lukaszwachowski.bakingapp.ui.detail.DetailActivity;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class RecipeStepFragmentModule {
+
+    private DetailActivity detailActivity;
+
+    public RecipeStepFragmentModule(DetailActivity detailActivity) {
+        this.detailActivity = detailActivity;
+    }
+
+    @Provides
+    @RecipeStepFragmentScope
+    public DetailActivity activity() {
+        return detailActivity;
+    }
 
     @Provides
     @RecipeStepFragmentScope
@@ -19,6 +32,6 @@ public class RecipeStepFragmentModule {
     @Provides
     @RecipeStepFragmentScope
     public StepsAdapter stepsAdapter() {
-        return new StepsAdapter();
+        return new StepsAdapter(detailActivity);
     }
 }

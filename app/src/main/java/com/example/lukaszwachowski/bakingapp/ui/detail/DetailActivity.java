@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.lukaszwachowski.bakingapp.R;
-import com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment;
+import com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment.RecipeStepFragment;
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
 
 import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.RECIPE_OBJECT;
 
 public class DetailActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

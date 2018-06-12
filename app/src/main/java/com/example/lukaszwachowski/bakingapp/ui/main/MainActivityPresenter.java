@@ -1,7 +1,8 @@
 package com.example.lukaszwachowski.bakingapp.ui.main;
 
+import android.util.DisplayMetrics;
+
 import com.example.lukaszwachowski.bakingapp.network.RecipeService;
-import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityMVP;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -13,9 +14,11 @@ public class MainActivityPresenter implements MainActivityMVP.Presenter {
     private MainActivityMVP.View view;
     private RecipeService recipeService;
     private CompositeDisposable disposable;
+    private MainActivity activity;
 
-    public MainActivityPresenter(RecipeService recipeService) {
+    public MainActivityPresenter(RecipeService recipeService, MainActivity activity) {
         this.recipeService = recipeService;
+        this.activity = activity;
         disposable = new CompositeDisposable();
     }
 
@@ -35,6 +38,15 @@ public class MainActivityPresenter implements MainActivityMVP.Presenter {
                         view.showSnackBar(error.getLocalizedMessage());
                     }
                 }));
+    }
+
+    @Override
+    public int numberOfColumns(int widthDivider) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int nColumns = displayMetrics.widthPixels / widthDivider;
+        if (nColumns < 1) return 1;
+        return nColumns;
     }
 
     @Override

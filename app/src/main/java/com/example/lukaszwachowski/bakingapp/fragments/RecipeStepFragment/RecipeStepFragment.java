@@ -1,4 +1,4 @@
-package com.example.lukaszwachowski.bakingapp.fragments;
+package com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment;
 
 
 import android.os.Bundle;
@@ -16,7 +16,9 @@ import com.example.lukaszwachowski.bakingapp.BakingApp;
 import com.example.lukaszwachowski.bakingapp.R;
 import com.example.lukaszwachowski.bakingapp.di.components.DaggerRecipeStepFragmentComponent;
 import com.example.lukaszwachowski.bakingapp.di.modules.RecipeStepFragmentModule;
+import com.example.lukaszwachowski.bakingapp.fragments.MovieDetailsFragment.MovieDetailsFragment;
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
+import com.example.lukaszwachowski.bakingapp.ui.detail.DetailActivity;
 
 import javax.inject.Inject;
 
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 
 import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.RECIPE_OBJECT;
 
-public class RecipeStepFragment extends Fragment {
+public class RecipeStepFragment extends Fragment implements StepsAdapter.OnStepClickListener {
 
     @BindView(R.id.ingredients_recycler_view)
     RecyclerView ingredientsRecyclerView;
@@ -45,6 +47,9 @@ public class RecipeStepFragment extends Fragment {
     @Inject
     StepsAdapter stepsAdapter;
 
+    @Inject
+    DetailActivity activity;
+
     private Recipe recipe;
 
     public static RecipeStepFragment newInstance(Recipe recipe) {
@@ -58,12 +63,13 @@ public class RecipeStepFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setRetainInstance(true);
 
         DaggerRecipeStepFragmentComponent.builder()
-                .recipeStepFragmentModule(new RecipeStepFragmentModule())
+                .recipeStepFragmentModule(new RecipeStepFragmentModule(((DetailActivity) getContext())))
                 .applicationComponent(BakingApp.get(getActivity()).component())
                 .build().inject(this);
+
+        recipe = getArguments().getParcelable(RECIPE_OBJECT);
     }
 
     @Override
@@ -72,24 +78,33 @@ public class RecipeStepFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_step, container, false);
         ButterKnife.bind(this, view);
 
-        if (savedInstanceState == null) {
+        stepsAdapter.setListener(this);
 
+        if (savedInstanceState == null) {
             stepsText.setVisibility(View.VISIBLE);
             ingredientsText.setVisibility(View.VISIBLE);
 
-            recipe = getArguments().getParcelable(RECIPE_OBJECT);
-
             ingredientsAdapter.swapData(recipe.ingredients);
-            ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
             ingredientsRecyclerView.setNestedScrollingEnabled(false);
             ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
-            stepsAdapter.swapData(recipe.steps);
-            stepsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            stepsAdapter.swapData(recipe);
+            stepsRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
             stepsRecyclerView.setNestedScrollingEnabled(false);
             stepsRecyclerView.setAdapter(stepsAdapter);
         }
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(Recipe recipe, int position) {
+
+        if (getResources().getBoolean(R.bool.isTablet)) {
+            activity.getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                    .replace(R.id.fragment_movie_container, MovieDetailsFragment.newInstance(recipe, position))
+                    .commit();
+        }
     }
 }

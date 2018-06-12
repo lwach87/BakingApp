@@ -18,6 +18,12 @@ public class MainActivityModule {
 
     @Provides
     @MainActivityScope
+    public MainActivity mainActivity() {
+        return mainActivity;
+    }
+
+    @Provides
+    @MainActivityScope
     public RecipeAdapter recipeAdapter() {
         return new RecipeAdapter(mainActivity);
     }

@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 
 import com.example.lukaszwachowski.bakingapp.BakingApp;
@@ -52,18 +51,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
         presenter.loadData();
         recipeAdapter.setListener(this);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns()));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, presenter.numberOfColumns(650)));
         recyclerView.setAdapter(recipeAdapter);
-    }
-
-    private int numberOfColumns() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int widthDivider = 650;
-        int width = displayMetrics.widthPixels;
-        int nColumns = width / widthDivider;
-        if (nColumns < 1) return 1;
-        return nColumns;
     }
 
     @Override
