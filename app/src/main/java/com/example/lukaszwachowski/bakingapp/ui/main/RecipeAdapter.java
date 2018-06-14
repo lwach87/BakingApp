@@ -70,7 +70,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.DataViewHo
         @BindView(R.id.steps)
         TextView steps;
 
-        public DataViewHolder(View view) {
+        private DataViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
 

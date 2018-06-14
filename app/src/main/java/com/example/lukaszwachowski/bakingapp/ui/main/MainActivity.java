@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
 import com.example.lukaszwachowski.bakingapp.BakingApp;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
     @BindView(R.id.main_activity)
     ViewGroup layout;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
                 .applicationComponent(BakingApp.get(this).component())
                 .build().inject(this);
 
+        toolbar.setTitle(getTitle());
         presenter.attachView(this);
         presenter.loadData();
         recipeAdapter.setListener(this);

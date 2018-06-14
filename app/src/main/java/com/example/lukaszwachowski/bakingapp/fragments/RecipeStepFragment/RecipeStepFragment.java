@@ -1,6 +1,7 @@
 package com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,14 +19,20 @@ import com.example.lukaszwachowski.bakingapp.di.components.DaggerRecipeStepFragm
 import com.example.lukaszwachowski.bakingapp.di.modules.RecipeStepFragmentModule;
 import com.example.lukaszwachowski.bakingapp.fragments.MovieDetailsFragment.MovieDetailsFragment;
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
+import com.example.lukaszwachowski.bakingapp.network.model.Step;
 import com.example.lukaszwachowski.bakingapp.ui.detail.DetailActivity;
+import com.example.lukaszwachowski.bakingapp.ui.movie.MovieActivity;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.POSITION;
 import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.RECIPE_OBJECT;
+import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.STEPS_LIST;
 
 public class RecipeStepFragment extends Fragment implements StepsAdapter.OnStepClickListener {
 
@@ -37,9 +44,6 @@ public class RecipeStepFragment extends Fragment implements StepsAdapter.OnStepC
 
     @BindView(R.id.ingredients_text)
     TextView ingredientsText;
-
-    @BindView(R.id.steps_text)
-    TextView stepsText;
 
     @Inject
     IngredientsAdapter ingredientsAdapter;
@@ -81,7 +85,6 @@ public class RecipeStepFragment extends Fragment implements StepsAdapter.OnStepC
         stepsAdapter.setListener(this);
 
         if (savedInstanceState == null) {
-            stepsText.setVisibility(View.VISIBLE);
             ingredientsText.setVisibility(View.VISIBLE);
 
             ingredientsAdapter.swapData(recipe.ingredients);
@@ -89,7 +92,7 @@ public class RecipeStepFragment extends Fragment implements StepsAdapter.OnStepC
             ingredientsRecyclerView.setNestedScrollingEnabled(false);
             ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
-            stepsAdapter.swapData(recipe);
+            stepsAdapter.swapData(recipe.steps);
             stepsRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
             stepsRecyclerView.setNestedScrollingEnabled(false);
             stepsRecyclerView.setAdapter(stepsAdapter);
@@ -99,12 +102,17 @@ public class RecipeStepFragment extends Fragment implements StepsAdapter.OnStepC
     }
 
     @Override
-    public void onItemClick(Recipe recipe, int position) {
+    public void onItemClick(ArrayList<Step> steps, int position) {
 
         if (getResources().getBoolean(R.bool.isTablet)) {
             activity.getSupportFragmentManager().beginTransaction().addToBackStack(null)
-                    .replace(R.id.fragment_movie_container, MovieDetailsFragment.newInstance(recipe, position))
+                    .replace(R.id.fragment_movie_container, MovieDetailsFragment.newInstance(steps, position))
                     .commit();
+        } else {
+            Intent intent = new Intent(activity, MovieActivity.class);
+            intent.putExtra(STEPS_LIST, steps);
+            intent.putExtra(POSITION, position);
+            activity.startActivity(intent);
         }
     }
 }

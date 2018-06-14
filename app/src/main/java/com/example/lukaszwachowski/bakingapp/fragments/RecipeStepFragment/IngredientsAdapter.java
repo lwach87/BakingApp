@@ -54,7 +54,7 @@ public class IngredientsAdapter extends RecyclerView.Adapter<IngredientsAdapter.
         @BindView(R.id.ingredient)
         TextView ingredient;
 
-        public DataViewHolder(View view) {
+        private DataViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }

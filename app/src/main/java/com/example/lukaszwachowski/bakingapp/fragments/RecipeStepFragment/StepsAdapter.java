@@ -2,6 +2,7 @@ package com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,23 +11,27 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lukaszwachowski.bakingapp.R;
-import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
+import com.example.lukaszwachowski.bakingapp.network.model.Step;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHolder> {
 
-    private Recipe recipe;
+    private ArrayList<Step> steps = new ArrayList<>();
     private OnStepClickListener listener;
     private Context context;
+    private int lastCheckedPos;
 
     public StepsAdapter(Context context) {
         this.context = context;
     }
 
     public interface OnStepClickListener {
-        void onItemClick(Recipe recipe, int position);
+        void onItemClick(ArrayList<Step> steps, int position);
     }
 
     public void setListener(OnStepClickListener listener) {
@@ -44,19 +49,20 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
     @Override
     public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
 
-        if (recipe.steps.get(position).thumbnailURL.equals("") && recipe.steps.get(position).videoURL.equals("")) {
-            holder.stepImage.setImageResource(R.drawable.ic_videocam_off_black_48dp);
-        } else {
-            holder.stepImage.setImageResource(R.drawable.ic_videocam_black_48dp);
-        }
+        holder.stepImage.setImageResource((steps.get(position).thumbnailURL.equals("")
+                && steps.get(position).videoURL.equals("")) ?
+                R.drawable.ic_videocam_off_black_48dp :
+                R.drawable.ic_videocam_black_48dp);
 
-        holder.stepId.setText(String.valueOf(recipe.steps.get(position).id + 1));
-        holder.shortDescription.setText(recipe.steps.get(position).shortDescription);
+        holder.stepId.setText(position == 0 ? "" : String.valueOf(steps.get(position).id));
+        holder.shortDescription.setText(steps.get(position).shortDescription);
+
+        holder.cardView.setSelected(position == lastCheckedPos);
     }
 
     @Override
     public int getItemCount() {
-        return recipe.steps.size();
+        return steps.size();
     }
 
     public class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -70,7 +76,10 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
         @BindView(R.id.step_image)
         ImageView stepImage;
 
-        public DataViewHolder(View view) {
+        @BindView(R.id.step_card)
+        CardView cardView;
+
+        private DataViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
             view.setOnClickListener(this);
@@ -78,12 +87,18 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
 
         @Override
         public void onClick(View v) {
-            listener.onItemClick(recipe, getAdapterPosition());
+            int prevPos = lastCheckedPos;
+            lastCheckedPos = getAdapterPosition();
+
+            notifyItemChanged(prevPos);
+            notifyItemChanged(lastCheckedPos);
+
+            listener.onItemClick(steps, getAdapterPosition());
         }
     }
 
-    public void swapData(Recipe newRecipe) {
-        recipe = newRecipe;
+    public void swapData(List<Step> newSteps) {
+        steps.addAll(newSteps);
         notifyDataSetChanged();
     }
 }
