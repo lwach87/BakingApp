@@ -1,6 +1,5 @@
 package com.example.lukaszwachowski.bakingapp.ui.main;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +14,12 @@ import com.example.lukaszwachowski.bakingapp.di.components.DaggerMainActivityCom
 import com.example.lukaszwachowski.bakingapp.di.modules.MainActivityModule;
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
 import com.example.lukaszwachowski.bakingapp.ui.detail.DetailActivity;
+import com.example.lukaszwachowski.bakingapp.widget.WidgetService;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.RECIPE_OBJECT;
 
 public class MainActivity extends AppCompatActivity implements MainActivityMVP.View, RecipeAdapter.OnItemClickListener {
 
@@ -78,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
 
     @Override
     public void onItemClick(Recipe recipe) {
-        Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(RECIPE_OBJECT, recipe);
-        startActivity(intent);
+        WidgetService.startActionUpdateRecipeWidgets(this, recipe);
+        startActivity(DetailActivity.myIntent(this, recipe));
     }
 }

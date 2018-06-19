@@ -15,11 +15,23 @@
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.detail.DetailActivity" />
         <activity android:name=".ui.movie.MovieActivity" />
+
+        <receiver android:name=".widget.WidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@layout/baking_app_widget_info" />
+        </receiver>
+        <service android:name=".widget.WidgetService" />
     </application>
 
 </manifest>

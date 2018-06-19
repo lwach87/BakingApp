@@ -1,5 +1,7 @@
 package com.example.lukaszwachowski.bakingapp.ui.detail;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,12 @@ public class DetailActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    public static Intent myIntent(Context context, Recipe recipe) {
+        Intent intent = new Intent(context, DetailActivity.class);
+        intent.putExtra(RECIPE_OBJECT, recipe);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
