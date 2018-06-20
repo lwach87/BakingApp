@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.lukaszwachowski.bakingapp.R;
 import com.example.lukaszwachowski.bakingapp.network.model.Step;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +26,11 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
     private OnStepClickListener listener;
     private Context context;
     private int lastCheckedPos;
+    private Picasso picasso;
 
-    public StepsAdapter(Context context) {
+    public StepsAdapter(Context context, Picasso picasso) {
         this.context = context;
+        this.picasso = picasso;
     }
 
     public interface OnStepClickListener {
@@ -54,6 +57,13 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
                 R.drawable.ic_videocam_off_black_48dp :
                 R.drawable.ic_videocam_black_48dp);
 
+        if (!steps.get(position).thumbnailURL.equals("")) {
+            holder.webImage.setVisibility(View.VISIBLE);
+            picasso.load(steps.get(position).thumbnailURL)
+                    .error(R.drawable.ic_broken_image_black_48dp)
+                    .into(holder.webImage);
+        }
+
         holder.stepId.setText(position == 0 ? "" : String.valueOf(steps.get(position).id));
         holder.shortDescription.setText(steps.get(position).shortDescription);
 
@@ -75,6 +85,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
 
         @BindView(R.id.step_image)
         ImageView stepImage;
+
+        @BindView(R.id.web_image)
+        ImageView webImage;
 
         @BindView(R.id.step_card)
         CardView cardView;

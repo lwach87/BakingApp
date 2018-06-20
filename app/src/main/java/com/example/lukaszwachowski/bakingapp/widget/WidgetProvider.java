@@ -21,7 +21,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_app_widget);
         views.removeAllViews(R.id.widget_ingredient_list);
-        views.setTextViewText(R.id.recipe_widget_title, recipe.getName());
+        views.setTextViewText(R.id.recipe_widget_title, recipe.name);
         views.setOnClickPendingIntent(R.id.recipe_widget_holder, pendingIntent);
 
         for (Ingredient ingredient : recipe.ingredients) {

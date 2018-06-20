@@ -43,6 +43,9 @@ public class MovieActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         DaggerMovieActivityComponent.builder()
                 .movieActivityModule(new MovieActivityModule(this))
                 .applicationComponent(BakingApp.get(this).component())
@@ -55,5 +58,11 @@ public class MovieActivity extends AppCompatActivity {
         moviePager.setAdapter(pagerAdapter);
         moviePager.setCurrentItem(position);
         tabLayout.setupWithViewPager(moviePager);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

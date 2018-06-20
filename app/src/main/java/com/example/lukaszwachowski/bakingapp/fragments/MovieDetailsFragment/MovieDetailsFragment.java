@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.PLAYBACK_READY;
+import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.PLAYER_POSITION;
 import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.POSITION;
 import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.STEPS_LIST;
 
@@ -57,6 +59,8 @@ public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventLis
     @BindView(R.id.card_view_movie)
     CardView cardView;
 
+    private long playbackPosition;
+    private boolean playbackReady = true;
     private SimpleExoPlayer exoPlayer;
     private MediaSessionCompat mediaSession;
     private PlaybackStateCompat.Builder stateBuilder;
@@ -76,6 +80,12 @@ public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            playbackPosition = savedInstanceState.getLong(PLAYER_POSITION);
+            playbackReady = savedInstanceState.getBoolean(PLAYBACK_READY);
+        }
+
         steps = getArguments().getParcelableArrayList(STEPS_LIST);
         position = getArguments().getInt(POSITION);
     }
@@ -105,6 +115,17 @@ public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventLis
         }
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (exoPlayer != null) {
+            playbackPosition = exoPlayer.getCurrentPosition();
+            playbackReady = exoPlayer.getPlayWhenReady();
+        }
+        outState.putLong(PLAYER_POSITION, playbackPosition);
+        outState.putBoolean(PLAYBACK_READY, playbackReady);
     }
 
     public String getVideo(String videoURL, String thumbnailURL) {
@@ -196,6 +217,8 @@ public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventLis
 
     private void releasePlayer() {
         if (exoPlayer != null) {
+            playbackPosition = exoPlayer.getCurrentPosition();
+            playbackReady = exoPlayer.getPlayWhenReady();
             exoPlayer.stop();
             exoPlayer.release();
             exoPlayer = null;
@@ -244,6 +267,22 @@ public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventLis
     @Override
     public void onPause() {
         super.onPause();
+        if (Util.SDK_INT <= 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         releasePlayer();
     }
 }
