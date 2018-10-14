@@ -20,7 +20,7 @@ public class Recipe implements Parcelable {
     public List<Ingredient> ingredients;
 
     @SerializedName("steps")
-    public ArrayList<Step> steps;
+    public List<Step> steps;
 
     @SerializedName("servings")
     public int servings;
