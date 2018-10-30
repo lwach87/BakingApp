@@ -44,7 +44,6 @@ public class MovieActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         DaggerMovieActivityComponent.builder()
                 .movieActivityModule(new MovieActivityModule(this))
@@ -58,11 +57,5 @@ public class MovieActivity extends AppCompatActivity {
         moviePager.setAdapter(pagerAdapter);
         moviePager.setCurrentItem(position);
         tabLayout.setupWithViewPager(moviePager);
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }

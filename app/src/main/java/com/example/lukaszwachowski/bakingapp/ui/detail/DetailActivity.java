@@ -34,19 +34,11 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setTitle(getTitle());
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Recipe recipe = getIntent().getExtras().getParcelable(RECIPE_OBJECT);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, RecipeStepFragment.newInstance(recipe)).commit();
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }
