@@ -43,10 +43,10 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.PLAYBACK_READY;
-import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.PLAYER_POSITION;
-import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.POSITION;
-import static com.example.lukaszwachowski.bakingapp.configuration.NetworkUtils.STEPS_LIST;
+import static com.example.lukaszwachowski.bakingapp.configuration.Constants.PLAYBACK_READY;
+import static com.example.lukaszwachowski.bakingapp.configuration.Constants.PLAYER_POSITION;
+import static com.example.lukaszwachowski.bakingapp.configuration.Constants.POSITION;
+import static com.example.lukaszwachowski.bakingapp.configuration.Constants.STEPS_LIST;
 
 public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventListener {
 
@@ -90,7 +90,6 @@ public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventLis
         position = getArguments().getInt(POSITION);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -141,15 +140,13 @@ public class MovieDetailsFragment extends Fragment implements ExoPlayer.EventLis
     // Src: https://developer.android.com/training/system-ui/immersive.html
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void hideSystemUI() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE);
-        }
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 
     private void setViewVisibility(View view, boolean show) {
