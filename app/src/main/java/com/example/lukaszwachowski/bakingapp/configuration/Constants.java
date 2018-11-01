@@ -1,6 +1,6 @@
 package com.example.lukaszwachowski.bakingapp.configuration;
 
-public class NetworkUtils {
+public class Constants {
 
     public static final String RECIPE_OBJECT = "recipeObject";
     public static final String STEPS_LIST = "stepsList";

@@ -22,12 +22,10 @@
         </activity>
         <activity
             android:name=".ui.detail.DetailActivity"
-            android:parentActivityName=".ui.main.MainActivity"
-            tools:targetApi="jelly_bean" />
+            android:parentActivityName=".ui.main.MainActivity"/>
         <activity
             android:name=".ui.movie.MovieActivity"
-            android:parentActivityName=".ui.detail.DetailActivity"
-            tools:targetApi="jelly_bean" />
+            android:parentActivityName=".ui.detail.DetailActivity"/>
 
         <receiver android:name=".widget.WidgetProvider">
             <intent-filter>
