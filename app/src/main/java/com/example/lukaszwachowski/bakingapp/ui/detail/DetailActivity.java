@@ -45,7 +45,8 @@ public class DetailActivity extends AppCompatActivity implements HasSupportFragm
     AndroidInjection.inject(this);
 
     toolbar.setTitle(getTitle());
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
     Recipe recipe = getIntent().getExtras().getParcelable(RECIPE_OBJECT);
 

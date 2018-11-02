@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
   @BindView(R.id.main_activity)
   ViewGroup layout;
 
-  @BindView(R.id.toolbar)
-  Toolbar toolbar;
+//  @BindView(R.id.toolbar)
+//  Toolbar toolbar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
 
     AndroidInjection.inject(this);
 
-    toolbar.setTitle(getTitle());
+//    toolbar.setTitle(getTitle());
     presenter.attachView(this);
     presenter.loadData();
     recipeAdapter.setListener(this);
