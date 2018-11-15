@@ -39,14 +39,11 @@ public class MainActivityPresenter implements MainActivityMVP.Presenter {
   }
 
   @Override
-  public int numberOfColumns(int widthDivider) {
-    DisplayMetrics displayMetrics = new DisplayMetrics();
-    activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-    int nColumns = displayMetrics.widthPixels / widthDivider;
-    if (nColumns < 1) {
-      return 1;
-    }
-    return nColumns;
+  public int numberOfColumns(int scalingFactor) {
+    DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
+    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+    int columnCount = (int) (dpWidth / scalingFactor);
+    return (columnCount >= 1 ? columnCount : 1);
   }
 
   @Override

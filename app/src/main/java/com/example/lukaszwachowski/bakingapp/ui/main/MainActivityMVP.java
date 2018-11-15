@@ -15,7 +15,7 @@ public class MainActivityMVP {
 
     void loadData();
 
-    int numberOfColumns(int widthDivider);
+    int numberOfColumns(int scaleFactor);
 
     void attachView(MainActivityMVP.View view);
 

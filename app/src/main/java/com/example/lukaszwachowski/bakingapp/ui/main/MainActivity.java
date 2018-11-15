@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityMVP.V
     presenter.loadData();
     recipeAdapter.setListener(this);
 
-    recyclerView.setLayoutManager(new GridLayoutManager(this, presenter.numberOfColumns(650)));
+    recyclerView.setLayoutManager(new GridLayoutManager(this, presenter.numberOfColumns(250)));
     recyclerView.setAdapter(recipeAdapter);
   }
 
