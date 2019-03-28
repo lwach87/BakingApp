@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/recipeListFragment">
+    <fragment
+        android:id="@+id/recipeListFragment"
+        android:name="com.example.lukaszwachowski.bakingapp.fragments.RecipeListFragment.RecipeListFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_recipie_list">
+        <action
+            android:id="@+id/next_action"
+            app:destination="@+id/recipeStepFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeStepFragment"
+        android:name="com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment.RecipeStepFragment"
+        android:label="Steps"
+        tools:layout="@layout/fragment_recipe_step">
+        <argument
+            android:name="recipe"
+            app:argType="com.example.lukaszwachowski.bakingapp.network.model.Recipe" />
+        <action
+            android:id="@+id/navigate_to_movie_activity"
+            app:destination="@id/movieActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/movieActivity"
+        android:name="com.example.lukaszwachowski.bakingapp.ui.movie.MovieActivity"
+        android:label="Movie"
+        tools:layout="@layout/activity_movie">
+        <argument
+            android:name="steps"
+            app:argType="com.example.lukaszwachowski.bakingapp.network.model.Step[]" />
+        <argument
+            android:name="position"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </activity>
+</navigation>
