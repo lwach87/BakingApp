@@ -1,5 +1,6 @@
-package com.example.lukaszwachowski.bakingapp.ui.main;
+package com.example.lukaszwachowski.bakingapp.fragments.RecipeListFragment;
 
+import com.example.lukaszwachowski.bakingapp.fragments.RecipeListFragment.RecipeMVP;
 import com.example.lukaszwachowski.bakingapp.network.RecipeService;
 
 import javax.inject.Inject;
@@ -9,14 +10,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivityPresenter implements MainActivityMVP.Presenter {
+public class RecipePresenter implements RecipeMVP.Presenter {
 
-    private MainActivityMVP.View view;
+    private RecipeMVP.View view;
     private RecipeService recipeService;
     private CompositeDisposable disposable;
 
     @Inject
-    public MainActivityPresenter(RecipeService recipeService) {
+    public RecipePresenter(RecipeService recipeService) {
         this.recipeService = recipeService;
         disposable = new CompositeDisposable();
     }
@@ -39,7 +40,7 @@ public class MainActivityPresenter implements MainActivityMVP.Presenter {
     }
 
     @Override
-    public void attachView(MainActivityMVP.View view) {
+    public void attachView(RecipeMVP.View view) {
         this.view = view;
     }
 

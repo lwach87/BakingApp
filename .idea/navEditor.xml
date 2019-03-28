@@ -8,6 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="movieActivity">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="537" />
+                            <option name="y" value="106" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="recipeListFragment">
                     <value>
                       <LayoutPositions>
@@ -19,7 +31,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_recipeListFragment_to_recipeStepFragment">
+                            <entry key="next_action">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -37,6 +49,15 @@
                             <option name="x" value="299" />
                             <option name="y" value="107" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="navigate_to_movie_activity">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

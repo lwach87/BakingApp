@@ -1,8 +1,8 @@
-package com.example.lukaszwachowski.bakingapp.ui.main;
+package com.example.lukaszwachowski.bakingapp.fragments.RecipeListFragment;
 
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
 
-public class MainActivityMVP {
+public class RecipeMVP {
 
   public interface View {
 
@@ -15,7 +15,7 @@ public class MainActivityMVP {
 
     void loadData();
 
-    void attachView(MainActivityMVP.View view);
+    void attachView(RecipeMVP.View view);
 
     void detachView();
   }

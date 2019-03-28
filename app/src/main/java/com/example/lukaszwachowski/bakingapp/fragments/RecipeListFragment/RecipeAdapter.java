@@ -1,4 +1,4 @@
-package com.example.lukaszwachowski.bakingapp.ui.main;
+package com.example.lukaszwachowski.bakingapp.fragments.RecipeListFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;

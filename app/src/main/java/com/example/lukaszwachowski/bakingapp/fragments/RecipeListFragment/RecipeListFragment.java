@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 import com.example.lukaszwachowski.bakingapp.R;
 import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
-import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityMVP;
-import com.example.lukaszwachowski.bakingapp.ui.main.MainActivityPresenter;
-import com.example.lukaszwachowski.bakingapp.ui.main.RecipeAdapter;
 import com.example.lukaszwachowski.bakingapp.widget.WidgetService;
 
 import javax.inject.Inject;
@@ -28,13 +25,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class RecipeListFragment extends Fragment implements MainActivityMVP.View, RecipeAdapter.OnItemClickListener {
+public class RecipeListFragment extends Fragment implements RecipeMVP.View, RecipeAdapter.OnItemClickListener {
 
     @Inject
     RecipeAdapter recipeAdapter;
 
     @Inject
-    MainActivityPresenter presenter;
+    RecipePresenter presenter;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;

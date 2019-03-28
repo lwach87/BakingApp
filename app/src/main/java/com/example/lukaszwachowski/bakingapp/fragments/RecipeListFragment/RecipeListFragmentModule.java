@@ -1,7 +1,5 @@
 package com.example.lukaszwachowski.bakingapp.fragments.RecipeListFragment;
 
-import com.example.lukaszwachowski.bakingapp.ui.main.RecipeAdapter;
-
 import dagger.Module;
 import dagger.Provides;
 
