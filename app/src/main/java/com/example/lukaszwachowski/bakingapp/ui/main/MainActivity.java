@@ -1,70 +1,56 @@
 package com.example.lukaszwachowski.bakingapp.ui.main;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.ViewGroup;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.example.lukaszwachowski.bakingapp.R;
-import com.example.lukaszwachowski.bakingapp.network.model.Recipe;
-import com.example.lukaszwachowski.bakingapp.ui.detail.DetailActivity;
-import com.example.lukaszwachowski.bakingapp.widget.WidgetService;
-import dagger.android.AndroidInjection;
+
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements MainActivityMVP.View,
-    RecipeAdapter.OnItemClickListener {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
-  @Inject
-  MainActivityMVP.Presenter presenter;
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
-  @Inject
-  RecipeAdapter recipeAdapter;
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
-  @BindView(R.id.recycler_view)
-  RecyclerView recyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
-  @BindView(R.id.main_activity)
-  ViewGroup layout;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        AndroidInjection.inject(this);
+        setSupportActionBar(toolbar);
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        setUpActionBar(navController);
+    }
 
-    AndroidInjection.inject(this);
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return fragmentDispatchingAndroidInjector;
+    }
 
-    presenter.attachView(this);
-    presenter.loadData();
-    recipeAdapter.setListener(this);
+    private void setUpActionBar(NavController navController) {
+        NavigationUI.setupActionBarWithNavController(this, navController);
+    }
 
-    recyclerView.setLayoutManager(new GridLayoutManager(this, presenter.numberOfColumns(250)));
-    recyclerView.setAdapter(recipeAdapter);
-  }
-
-  @Override
-  public void updateData(Recipe recipe) {
-    recipeAdapter.swapData(recipe);
-  }
-
-  @Override
-  public void showSnackBar(String text) {
-    Snackbar.make(layout, text, Snackbar.LENGTH_SHORT).show();
-  }
-
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    presenter.detachView();
-  }
-
-  @Override
-  public void onItemClick(Recipe recipe) {
-    WidgetService.startActionUpdateRecipeWidgets(this, recipe);
-    startActivity(DetailActivity.myIntent(this, recipe));
-  }
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return navController.navigateUp();
+    }
 }

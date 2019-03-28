@@ -38,7 +38,6 @@ public class MovieActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
 
     toolbar.setNavigationOnClickListener(v -> onBackPressed());
-//    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     AndroidInjection.inject(this);
 
