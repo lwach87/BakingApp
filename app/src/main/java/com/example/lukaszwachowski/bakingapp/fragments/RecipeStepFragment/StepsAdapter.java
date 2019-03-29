@@ -11,6 +11,7 @@ import com.example.lukaszwachowski.bakingapp.network.model.Step;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHolder> {
 
-    private ArrayList<Step> steps = new ArrayList<>();
+    private List<Step> steps = new ArrayList<>();
     private OnStepClickListener listener;
     private int lastCheckedPos;
     private Picasso picasso;
@@ -68,14 +69,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
         return steps.size();
     }
 
-    public void swapData(List<Step> newSteps) {
-        steps.addAll(newSteps);
+    public void swapData(Step[] newSteps) {
+        steps.addAll(Arrays.asList(newSteps));
         notifyDataSetChanged();
     }
 
     public interface OnStepClickListener {
 
-        void onItemClick(ArrayList<Step> steps, int position);
+        void onItemClick(Step[] steps, int position);
     }
 
     public class DataViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -109,7 +110,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.DataViewHold
             notifyItemChanged(prevPos);
             notifyItemChanged(lastCheckedPos);
 
-            listener.onItemClick(steps, getAdapterPosition());
+            Step[] array = new Step[steps.size()];
+            steps.toArray(array);
+            listener.onItemClick(array, getAdapterPosition());
         }
     }
 }

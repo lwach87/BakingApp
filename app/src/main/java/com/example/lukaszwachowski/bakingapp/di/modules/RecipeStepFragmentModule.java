@@ -2,7 +2,6 @@ package com.example.lukaszwachowski.bakingapp.di.modules;
 
 import com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment.IngredientsAdapter;
 import com.example.lukaszwachowski.bakingapp.fragments.RecipeStepFragment.StepsAdapter;
-import com.example.lukaszwachowski.bakingapp.ui.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import dagger.Module;
